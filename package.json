@@ -1,0 +1,12 @@
+{
+  "name": "tien-len-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix backend install --no-audit --no-fund && npm --prefix backend run build && npm --prefix frontend install --no-audit --no-fund && npm --prefix frontend run build",
+    "start": "npm --prefix backend start"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

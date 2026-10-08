@@ -1,0 +1,6 @@
+tính năng
+- thêm ván chơi với default những người được chọn từ đầu
+- chức năng nhập tiền cho từng bàn chơi
+- lịch sử ván thông tin điểm của các người chơi đưa về giao diện ngang
+- đưa tổng điểm lên bang thành viên
+

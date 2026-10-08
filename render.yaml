@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: tien-len-app
+    runtime: node
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        sync: false
