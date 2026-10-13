@@ -34,7 +34,7 @@ git push -u origin main
 
 ## Luu y
 
-- Free tier Render **sleep sau ~15 phut khong ai dung** — request dau tien mat ~30-60s de day.
+- Free tier Render **sleep sau ~15 phut khong co request** (khong chinh duoc). App tu ping `/api/health` moi 10 phut khi con nguoi dung trong 30 phut gan nhat (dung `RENDER_EXTERNAL_URL` do Render tu dat), nen thuc te chi sleep sau ~30-40 phut khong ai dung — request dau tien sau do mat ~30-60s de day.
 - Moi lan push len `main`, Render tu deploy lai, **du lieu van con** (nam o Neon).
 - Doi ten mien: Settings → Custom Domain (tuy chon).
 - Log loi: tab Logs tren Render.

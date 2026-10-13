@@ -295,7 +295,7 @@ export default function App() {
   return (
     <div className="desk">
       <header className="bar">
-        <span className="bar-logo"><Icon name="cards" size={26} /></span>
+        <img className="bar-logo" src="/icon.svg" alt="Tiến Lên" width={42} height={42} />
         <b className="bar-title">Tiến Lên Tính Tiền</b>
         <span className="spacer" style={{ flex: 1 }} />
         <span className="menuwrap grow1">

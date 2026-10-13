@@ -51,7 +51,7 @@ export default function RoundDialog({ members, onClose, onSave }: Props) {
               <span className="mrank-name">{p.name}</span>
               <input
                 className={`score-input ${typed ? (v < 0 ? 'neg' : 'pos') : ''}`}
-                type="number"
+                type="text"
                 placeholder="+/-"
                 value={raw}
                 onChange={(e) => setScores({ ...scores, [p.id]: e.target.value })}

@@ -1,5 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect x="8" y="12" width="34" height="46" rx="6" fill="#fff" stroke="#333" stroke-width="3" transform="rotate(-10 25 35)"/>
-  <rect x="22" y="8" width="34" height="46" rx="6" fill="#e60023" stroke="#a8001a" stroke-width="3" transform="rotate(8 39 31)"/>
-  <text x="39" y="40" font-size="24" text-anchor="middle" fill="#fff" font-family="sans-serif" font-weight="bold" transform="rotate(8 39 31)">♥</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <g id="card"><rect x="-23" y="-64" width="46" height="66" rx="6" fill="#f6ecd6" stroke="#d6c7a0" stroke-width="1.5"/></g>
+    <path id="heart" d="M0 9C-15-2-13-13-5-13-2-13 0-11 0-9 0-11 2-13 5-13 13-13 15-2 0 9Z"/>
+    <path id="diamond" d="M0-12 9 0 0 12-9 0Z"/>
+    <path id="spade" d="M0-13C-4-6-13-3-13 4-13 9-7 11-3.5 8-3.5 11-4.5 13-7 14L7 14C4.5 13 3.5 11 3.5 8 7 11 13 9 13 4 13-3 4-6 0-13Z"/>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="#ffc21c"/>
+  <g transform="translate(64 64) scale(1) translate(-64 -64)">
+  <!-- la trai: A co -->
+  <g transform="translate(45 99) rotate(-18)">
+    <use href="#card"/>
+    <use href="#heart" transform="translate(0 -32) scale(1.15)" fill="#e5484d"/>
+    <text x="-18" y="-50" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#e5484d">A</text>
+    <use href="#heart" transform="translate(-14 -40) scale(.4)" fill="#e5484d"/>
+  </g>
+  <!-- la phai: A ro -->
+  <g transform="translate(83 99) rotate(18)">
+    <use href="#card"/>
+    <use href="#diamond" transform="translate(0 -32) scale(1.15)" fill="#e5484d"/>
+    <text x="-18" y="-50" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#e5484d">A</text>
+    <use href="#diamond" transform="translate(-14 -40) scale(.4)" fill="#e5484d"/>
+  </g>
+  <!-- la giua (tren cung): A bich -->
+  <g transform="translate(64 96)">
+    <use href="#card"/>
+    <use href="#spade" transform="translate(0 -32) scale(1.25)" fill="#26282c"/>
+    <text x="-18" y="-50" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#26282c">A</text>
+    <use href="#spade" transform="translate(-14 -40) scale(.4)" fill="#26282c"/>
+  </g>
+  </g>
 </svg>
