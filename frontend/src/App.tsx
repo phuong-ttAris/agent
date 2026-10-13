@@ -7,6 +7,7 @@ import Avatar from './components/Avatar.js';
 import Icon from './components/Icon.js';
 import { api } from './services/api.js';
 import { speakScores } from './utils/sound.js';
+import { compressImage } from './utils/image.js';
 import { fmtDay, fmtSigned } from './utils/format.js';
 import type { Game, Player } from './types/index.js';
 
@@ -229,17 +230,10 @@ export default function App() {
       setMErr('Chỉ chọn file ảnh');
       return;
     }
-    const rd = new FileReader();
-    rd.onload = () => {
-      const url = String(rd.result ?? '');
-      if (url.length > 550000) {
-        setMErr('Ảnh quá lớn (tối đa ~400KB)');
-        return;
-      }
-      setMErr(null);
-      setMAvatar(url);
-    };
-    rd.readAsDataURL(f);
+    setMErr(null);
+    compressImage(f)
+      .then(setMAvatar)
+      .catch((err) => setMErr(err instanceof Error ? err.message : 'Không xử lý được ảnh'));
   }
 
   async function saveMember() {
