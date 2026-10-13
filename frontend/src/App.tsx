@@ -4,6 +4,7 @@ import MemberPicker from './components/MemberPicker.js';
 import RoundDialog from './components/RoundDialog.js';
 import RoundCard from './components/RoundCard.js';
 import Avatar from './components/Avatar.js';
+import Icon from './components/Icon.js';
 import { api } from './services/api.js';
 import { speakScores } from './utils/sound.js';
 import { fmtDay, fmtSigned } from './utils/format.js';
@@ -66,7 +67,7 @@ export default function App() {
         if (!g) setSelectedId(null);
       }
     } catch (e) {
-      setErr(e instanceof Error ? e.message : 'Tai du lieu that bai');
+      setErr(e instanceof Error ? e.message : 'Tải dữ liệu thất bại');
     }
   }
 
@@ -199,7 +200,7 @@ export default function App() {
           setChecked((c) => c.filter((x) => x !== pid));
           loadAll();
         } catch (e) {
-          setErrDlg(e instanceof Error ? e.message : 'Xoa that bai');
+          setErrDlg(e instanceof Error ? e.message : 'Xóa thất bại');
         }
       },
     });
@@ -216,7 +217,7 @@ export default function App() {
       setRenameDlg(null);
       loadAll();
     } catch (e) {
-      setErrDlg(e instanceof Error ? e.message : 'Doi ten that bai');
+      setErrDlg(e instanceof Error ? e.message : 'Đổi tên thất bại');
     }
   }
 
@@ -225,14 +226,14 @@ export default function App() {
     e.target.value = '';
     if (!f) return;
     if (!f.type.startsWith('image/')) {
-      setMErr('Chi chon file anh');
+      setMErr('Chỉ chọn file ảnh');
       return;
     }
     const rd = new FileReader();
     rd.onload = () => {
       const url = String(rd.result ?? '');
       if (url.length > 550000) {
-        setMErr('Anh qua lon (toi da ~400KB)');
+        setMErr('Ảnh quá lớn (tối đa ~400KB)');
         return;
       }
       setMErr(null);
@@ -243,7 +244,7 @@ export default function App() {
 
   async function saveMember() {
     if (!mName.trim()) {
-      setMErr('Nhap ten nguoi choi');
+      setMErr('Nhập tên người chơi');
       return;
     }
     setMErr(null);
@@ -255,7 +256,7 @@ export default function App() {
       await loadAll();
       setChecked((c) => (c.length < 4 && !c.includes(p.id) ? [...c, p.id] : c));
     } catch (e) {
-      setMErr(e instanceof Error ? e.message : 'Them that bai');
+      setMErr(e instanceof Error ? e.message : 'Thêm thất bại');
     }
   }
 
@@ -300,39 +301,38 @@ export default function App() {
   return (
     <div className="desk">
       <header className="bar">
-        <span className="bar-logo">🃏</span>
+        <span className="bar-logo"><Icon name="cards" size={26} /></span>
         <b className="bar-title">Tiến Lên Tính Tiền</b>
         <span className="spacer" style={{ flex: 1 }} />
         <span className="menuwrap grow1">
           <button className="bar-selectbtn" onClick={() => setGameMenu(!gameMenu)}>
-            📅 {detail ? `${detail.name} - ${day(detail.ngayChoi ?? detail.createdAt)}` : '-- Chon ban --'} ▾
+            <Icon name="calendar" size={16} /> {detail ? `${detail.name} - ${day(detail.ngayChoi ?? detail.createdAt)}` : '-- Chọn bàn --'} <Icon name="chevronDown" size={16} />
           </button>
           {gameMenu && (
             <div className="ctx big">
               {games.map((g) => (
                 <div key={g.id} className="grow">
                   <button className={g.id === selectedId ? 'on' : ''} onClick={() => openGame(g.id)}>
-                    {g.id === selectedId ? '✓ ' : ''}{g.name} - {day(g.ngayChoi ?? g.createdAt)}
+                    {g.id === selectedId && <Icon name="check" size={14} />} {g.name} - {day(g.ngayChoi ?? g.createdAt)}
                   </button>
                   <button
                     className="trash"
-                    title={`Xoa ban "${g.name}"`}
+                    title={`Xóa bàn "${g.name}"`}
                     onClick={(e) => { e.stopPropagation(); setGameMenu(false); deleteGameById(g.id, g.name); }}
-                  >🗑</button>
+                  ><Icon name="trash" size={16} /></button>
                 </div>
               ))}
-              <button className="cta" onClick={() => { setGameMenu(false); setPopup('game'); }}>+ Tạo bàn mới</button>
             </div>
           )}
         </span>
-        <button className="bar-btn bar-add" onClick={() => setPopup('game')} title="Them ban moi">＋ Thêm</button>
+        <button className="bar-btn bar-add" onClick={() => setPopup('game')} title="Thêm bàn mới"><Icon name="plus" size={16} /> Thêm</button>
       </header>
 
       {err && <p className="error">{err}</p>}
 
       <div className="layout1">
         <main className="center">
-          <button className="bigadd" disabled={!detail} onClick={tryOpenRound}>＋&nbsp;&nbsp;THÊM VÁN MỚI</button>
+          <button className="bigadd" disabled={!detail} onClick={tryOpenRound}><Icon name="plus" size={20} /> THÊM VÁN MỚI</button>
 
           {!detail && <div className="panel"><p className="muted">Chọn một bàn để xem chi tiết.</p></div>}
 
@@ -340,10 +340,10 @@ export default function App() {
             <div className="panel">
               <div className="row between" onClick={() => setMembersOpen(!membersOpen)} style={{ cursor: 'pointer' }}>
                 <div>
-                  <h3 style={{ margin: 0 }}>👥 Chi tiết bàn chơi</h3>
+                  <h3 style={{ margin: 0 }}><Icon name="users" /> Chi tiết bàn chơi</h3>
                   <span className="muted">{detail.name} - {day(detail.ngayChoi ?? detail.createdAt)}</span>
                 </div>
-                <span className="chev">{membersOpen ? '﹀' : '〉'}</span>
+                <span className="chev"><Icon name={membersOpen ? 'chevronDown' : 'chevronRight'} /></span>
               </div>
               {membersOpen && (
                 <>
@@ -351,7 +351,7 @@ export default function App() {
                     {inGame.map((p) => {
                       const on = !nghi.has(p.id);
                       return (
-                        <div className="hm-av" key={p.id} onClick={() => togglePlaying(p.id)} title="Bam de doi trang thai">
+                        <div className="hm-av" key={p.id} onClick={() => togglePlaying(p.id)} title="Bấm để đổi trạng thái">
                           <Avatar id={p.id} name={p.name} size={56} src={p.avatar} playing={on} />
                           <span className="hm-avname">{p.name}</span>
                           <span className={on ? 'pill on' : 'pill'}>{on ? 'Đang chơi' : 'Nghỉ'}</span>
@@ -360,16 +360,16 @@ export default function App() {
                     })}
                     {inGame.length < 4 && (
                       <div className="hm-av">
-                        <button className="hm-plus" onClick={() => setPickerOpen(true)} title="Them thanh vien">＋</button>
+                        <button className="hm-plus" onClick={() => setPickerOpen(true)} title="Thêm thành viên"><Icon name="plus" size={24} /></button>
                         <span className="hm-avname">Thêm</span>
                       </div>
                     )}
                   </div>
                   <div className="totbox">
                     <div className="row between">
-                      <h4 style={{ margin: 0 }}>🏆 Tổng tiền hiện tại</h4>
-                      <button className="iconbtn" onClick={toggleHide} title={hideTotals ? 'Hien so tien' : 'An so tien'}>
-                        {hideTotals ? '🙈' : '👁'}
+                      <h4 style={{ margin: 0 }}><Icon name="trophy" /> Tổng tiền hiện tại</h4>
+                      <button className="iconbtn" onClick={toggleHide} title={hideTotals ? 'Hiện số tiền' : 'Ẩn số tiền'}>
+                        <Icon name={hideTotals ? 'eyeOff' : 'eye'} size={20} />
                       </button>
                     </div>
                     <div className="totgrid" style={{ gridTemplateColumns: `repeat(${inGame.length}, minmax(0, 1fr))` }}>
@@ -396,12 +396,12 @@ export default function App() {
           {detail && (
             <div className="panel">
               <div className="row between" onClick={() => setRoundsOpen(!roundsOpen)} style={{ cursor: 'pointer' }}>
-                <h3 style={{ margin: 0 }}>☰ Danh sách ván</h3>
-                <span><span className="count">{detail.rounds.length} ván</span> <span className="chev">{roundsOpen ? '﹀' : '〉'}</span></span>
+                <h3 style={{ margin: 0 }}><Icon name="list" /> Danh sách ván</h3>
+                <span><span className="count">{detail.rounds.length} ván</span> <span className="chev"><Icon name={roundsOpen ? 'chevronDown' : 'chevronRight'} /></span></span>
               </div>
               {roundsOpen && (
                 <div className="rounds">
-                  {rounds.length === 0 && <p className="muted">Chua co van nao. Bam "THEM VAN MOI" ben tren.</p>}
+                  {rounds.length === 0 && <p className="muted">Chưa có ván nào. Bấm "THÊM VÁN MỚI" bên trên.</p>}
                   {rounds.map((r) => (
                     <RoundCard
                       key={r.id}
@@ -424,8 +424,8 @@ export default function App() {
         <div className="overlay over2" onClick={() => setErrDlg(null)}>
           <div className="popup narrow" onClick={(e) => e.stopPropagation()}>
             <div className="row between">
-              <h3>⚠️ Không thể thực hiện</h3>
-              <button className="iconbtn" onClick={() => setErrDlg(null)} aria-label="Dong">✕</button>
+              <h3>Không thể thực hiện</h3>
+              <button className="iconbtn" onClick={() => setErrDlg(null)} aria-label="Đóng"><Icon name="x" /></button>
             </div>
             <p>{errDlg}</p>
             <button className="redbtn block" onClick={() => setErrDlg(null)}>Đã hiểu</button>
@@ -437,8 +437,8 @@ export default function App() {
         <div className="overlay over2" onClick={() => setConfirmDlg(null)}>
           <div className="popup narrow" onClick={(e) => e.stopPropagation()}>
             <div className="row between">
-              <h3>⚠️ Xác nhận</h3>
-              <button className="iconbtn" onClick={() => setConfirmDlg(null)} aria-label="Dong">✕</button>
+              <h3>Xác nhận</h3>
+              <button className="iconbtn" onClick={() => setConfirmDlg(null)} aria-label="Đóng"><Icon name="x" /></button>
             </div>
             <p>{confirmDlg.msg}</p>
             <div className="frow2">
@@ -453,8 +453,8 @@ export default function App() {
         <div className="overlay over2" onClick={() => setRenameDlg(null)}>
           <div className="popup narrow" onClick={(e) => e.stopPropagation()}>
             <div className="row between">
-              <h3>✎ Đổi tên thành viên</h3>
-              <button className="iconbtn" onClick={() => setRenameDlg(null)} aria-label="Dong">✕</button>
+              <h3>Đổi tên thành viên</h3>
+              <button className="iconbtn" onClick={() => setRenameDlg(null)} aria-label="Đóng"><Icon name="x" /></button>
             </div>
             <div className="field"><label>Tên mới:</label>
               <input
@@ -492,7 +492,7 @@ export default function App() {
       )}
 
       {popup === 'game' && (
-        <Modal title="＋ Tạo bàn chơi" onClose={() => setPopup(null)}>
+        <Modal title="Tạo bàn chơi" onClose={() => setPopup(null)}>
           <p className="muted">Tạo bàn mới, chọn ngày và thành viên. Tên bàn tự động: <b>{nextTableName()}</b></p>
           <div className="field"><label>Ngày chơi:</label><input type="date" value={newGameDate} onChange={(e) => setNewGameDate(e.target.value)} /></div>
           <div className="field"><label>Thành viên: ({checked.length}/4)</label>
@@ -505,29 +505,29 @@ export default function App() {
                     <button
                       className={`pick ${on ? 'on' : ''}`}
                       disabled={full}
-                      title={full ? 'Ban da du 4 nguoi' : (on ? 'Bo chon' : 'Chon')}
+                      title={full ? 'Bàn đã đủ 4 người' : (on ? 'Bỏ chọn' : 'Chọn')}
                       onClick={() => setChecked(on ? checked.filter((x) => x !== p.id) : [...checked, p.id])}
                     >
                       <Avatar id={p.id} name={p.name} size={28} src={p.avatar} />
                       <span className="pname">{p.name}</span>
-                      {on && <b className="tick">✓</b>}
+                      {on && <b className="tick"><Icon name="check" size={14} /></b>}
                     </button>
                     <button
                       className="mini"
-                      title={`Doi ten ${p.name}`}
+                      title={`Đổi tên ${p.name}`}
                       onClick={() => renameMemberInCreate(p.id, p.name)}
-                    >✎</button>
+                    ><Icon name="edit" size={15} /></button>
                     <button
                       className="trash sm"
-                      title={`Xoa thanh vien ${p.name}`}
+                      title={`Xóa thành viên ${p.name}`}
                       onClick={() => deleteMemberInCreate(p.id, p.name)}
-                    >🗑</button>
+                    ><Icon name="trash" size={15} /></button>
                   </span>
                 );
               })}
-              <button className="dashadd" onClick={() => { setMName(''); setMAvatar(undefined); setMemberOpen(true); }}>＋&nbsp;&nbsp;Thêm thành viên</button>
+              <button className="dashadd" onClick={() => { setMName(''); setMAvatar(undefined); setMemberOpen(true); }}><Icon name="plus" size={16} /> Thêm thành viên</button>
             </div>
-            <p className="muted">Chon thanh vien co san hoac them moi. Tối thiểu 2 người, tối đa 4 người.</p>
+            <p className="muted">Chọn thành viên có sẵn hoặc thêm mới. Tối thiểu 2 người, tối đa 4 người.</p>
           </div>
           <div className="frow2">
             <button className="ghostbtn" onClick={() => setPopup(null)}>Hủy</button>
@@ -541,14 +541,14 @@ export default function App() {
           <div className="popup narrow" onClick={(e) => e.stopPropagation()}>
             <div className="row between">
               <h3>Thêm thành viên</h3>
-              <button className="iconbtn" onClick={() => setMemberOpen(false)} aria-label="Dong">✕</button>
+              <button className="iconbtn" onClick={() => setMemberOpen(false)} aria-label="Đóng"><Icon name="x" /></button>
             </div>
             <div className="photoview">
               <label className="photo">
                 {mAvatar ? (
                   <img src={mAvatar} alt="anh" />
                 ) : (
-                  <span className="cam">📷</span>
+                  <span className="cam"><Icon name="camera" size={30} /></span>
                 )}
                 <input type="file" accept="image/*" hidden onChange={pickAvatar} />
               </label>

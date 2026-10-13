@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Avatar from './Avatar.js';
+import Icon from './Icon.js';
 import type { Player } from '../types/index.js';
 
 interface Props {
@@ -26,7 +27,7 @@ export default function MemberPicker(props: Props) {
     setSel((s) => {
       if (s.includes(pid)) return s.filter((x) => x !== pid);
       if (s.length >= 4) {
-        setErr('Ban da du 4 nguoi.');
+        setErr('Bàn đã đủ 4 người.');
         return s;
       }
       return [...s, pid];
@@ -37,14 +38,14 @@ export default function MemberPicker(props: Props) {
     <div className="overlay" onClick={props.onClose}>
       <div className="popup" onClick={(e) => e.stopPropagation()}>
         <div className="row between">
-          <h3>Them thanh vien</h3>
-          <button className="iconbtn" onClick={props.onClose} aria-label="Dong">✕</button>
+          <h3>Thêm thành viên</h3>
+          <button className="iconbtn" onClick={props.onClose} aria-label="Đóng"><Icon name="x" /></button>
         </div>
         <div className="search">
-          <span>🔍</span>
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Tim thanh vien..." />
+          <Icon name="search" size={16} />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Tìm thành viên…" />
         </div>
-        {!props.canToggle && <p className="muted">Chon ban choi truoc de them nguoi vao ban.</p>}
+        {!props.canToggle && <p className="muted">Chọn bàn chơi trước để thêm người vào bàn.</p>}
         <div className="picklist">
           {list.map((p) => {
             const on = sel.includes(p.id);
@@ -62,7 +63,7 @@ export default function MemberPicker(props: Props) {
               </div>
             );
           })}
-          {list.length === 0 && <p className="muted">Khong tim thay ai.</p>}
+          {list.length === 0 && <p className="muted">Không tìm thấy ai.</p>}
         </div>
         {err && <p className="error">{err}</p>}
         <div className="frow2">

@@ -7,7 +7,7 @@ async function req<T>(url: string, init?: RequestInit): Promise<T> {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error((body as { message?: string }).message ?? `Loi ${res.status}`);
+    throw new Error((body as { message?: string }).message ?? `Lỗi ${res.status}`);
   }
   return res.json() as Promise<T>;
 }

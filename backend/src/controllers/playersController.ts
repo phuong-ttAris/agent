@@ -6,7 +6,7 @@ import { readDb, writeDb } from '../services/store.js';
 function avatarOf(body: Record<string, unknown> | undefined): string | undefined {
   const a = body?.avatar;
   if (typeof a !== 'string' || !a.startsWith('data:image/')) return undefined;
-  if (a.length > 550000) throw new Error('Anh qua lon (toi da ~400KB)');
+  if (a.length > 550000) throw new Error('Ảnh quá lớn (tối đa ~400KB)');
   return a;
 }
 
@@ -16,7 +16,7 @@ export async function listPlayers(_req: Request, res: Response) {
 
 export async function createPlayer(req: Request, res: Response) {
   const { name } = req.body ?? {};
-  if (!name || !String(name).trim()) return res.status(400).json({ message: 'name la bat buoc' });
+  if (!name || !String(name).trim()) return res.status(400).json({ message: 'Tên là bắt buộc' });
   const db = await readDb();
   const player = { id: uuid(), name: String(name).trim(), avatar: avatarOf(req.body), createdAt: new Date().toISOString() };
   db.players.push(player);
@@ -27,7 +27,7 @@ export async function createPlayer(req: Request, res: Response) {
 export async function updatePlayer(req: Request, res: Response) {
   const db = await readDb();
   const p = db.players.find((x) => x.id === req.params.id);
-  if (!p) return res.status(404).json({ message: 'Khong tim thay player' });
+  if (!p) return res.status(404).json({ message: 'Không tìm thấy người chơi' });
   if (req.body?.name) p.name = String(req.body.name).trim();
   if (req.body?.avatar !== undefined) p.avatar = avatarOf(req.body);
   await writeDb(db);
@@ -37,7 +37,7 @@ export async function updatePlayer(req: Request, res: Response) {
 export async function deletePlayer(req: Request, res: Response) {
   const db = await readDb();
   const used = db.games.some((g) => g.playerIds.includes(req.params.id));
-  if (used) return res.status(400).json({ message: 'Player da choi game, khong xoa duoc' });
+  if (used) return res.status(400).json({ message: 'Người chơi đã tham gia bàn, không thể xóa' });
   db.players = db.players.filter((x) => x.id !== req.params.id);
   await writeDb(db);
   res.json({ ok: true });

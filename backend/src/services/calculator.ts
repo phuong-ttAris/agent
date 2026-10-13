@@ -6,12 +6,12 @@ import type { KetQuaItem, RoundInput } from '../types/index.js';
  */
 export function calculateRound(input: RoundInput): KetQuaItem[] {
   if (!Array.isArray(input.scores) || input.scores.length === 0) {
-    throw new Error('scores khong duoc rong');
+    throw new Error('Điểm không được để trống');
   }
   return input.scores.map((s) => {
-    if (!s.playerId) throw new Error('Thieu playerId trong scores');
+    if (!s.playerId) throw new Error('Thiếu playerId trong điểm');
     if (typeof s.amount !== 'number' || Number.isNaN(s.amount)) {
-      throw new Error('amount phai la so (am/duong)');
+      throw new Error('Số điểm phải là số (âm/dương)');
     }
     return {
       playerId: s.playerId,

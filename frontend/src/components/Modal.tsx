@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import Icon from './Icon.js';
 
 interface Props {
   title: string;
@@ -21,7 +22,7 @@ export default function Modal({ title, onClose, children }: Props) {
       <div className="popup" onClick={(e) => e.stopPropagation()}>
         <div className="row between">
           <h3>{title}</h3>
-          <button className="iconbtn" onClick={onClose} aria-label="Dong">✕</button>
+          <button className="iconbtn" onClick={onClose} aria-label="Đóng"><Icon name="x" /></button>
         </div>
         {children}
       </div>

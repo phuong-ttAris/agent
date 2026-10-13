@@ -328,3 +328,132 @@ button, .btn, select, input[type="checkbox"] { min-height: 0; }
   .overlay { align-items: center; padding: 16px; }
   .popup { border-radius: 20px; max-width: 100%; }
 }
+
+/* Icon SVG: can giua theo chu, ke thua mau */
+.ico { flex: none; vertical-align: -0.2em; }
+.hm-plus, .iconbtn, .hm-icobtn, .bar-btn, .bigadd, .bar-selectbtn, .dashadd, .ctx button, .cta, .done, .chev, .bar-logo, .photo .cam, .search, .pchip .tick, .mini, .trash {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+}
+.hm-plus { padding: 0; color: #8a8378; }
+.hm-plus:hover { border-color: #ffc21c; color: #3a2c00; background: #fff8e1; }
+.bar-logo { color: #3a2c00; }
+.bigadd, .bar-selectbtn { width: 100%; }
+.bar-selectbtn { justify-content: space-between; }
+.ctx button { justify-content: flex-start; }
+.grow button:first-child { display: inline-flex; justify-content: flex-start; }
+.iconbtn, .hm-icobtn { color: #6b6156; border-radius: 10px; }
+.iconbtn:hover, .hm-icobtn:hover { background: #f0ebe0; }
+.pchip .pick .tick { margin-left: auto; }
+
+/* ===== Lop giao dien hien dai (ghi de) ===== */
+:root {
+  --bg: #f6f5f2; --surface: #fff; --line: #ece8df; --ink: #1f1b16; --ink-2: #6b655b;
+  --brand: #ffb800; --brand-ink: #2b2100; --danger: #e5383b; --ok: #12a05c;
+  --shadow: 0 1px 2px rgba(31,27,22,.05), 0 8px 24px -12px rgba(31,27,22,.12);
+  --ring: 0 0 0 3px rgba(255,184,0,.35);
+}
+body { font-family: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; font-size: 15px; line-height: 1.45; }
+button, input, select { font-family: inherit; }
+button { transition: background .15s, transform .1s, box-shadow .15s, border-color .15s; }
+button:active:not(:disabled) { transform: scale(.97); }
+.pos { color: var(--ok); } .neg { color: var(--danger); }
+.muted { color: var(--ink-2); }
+.hint { font-size: 12.5px; margin: 6px 0 14px; }
+
+/* Header: kinh mo, gon */
+.desk { background: var(--bg); padding: 14px; gap: 14px; }
+.bar { background: rgba(255,255,255,.82); backdrop-filter: saturate(1.6) blur(14px); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 8px 10px 8px 8px; top: 10px; }
+.bar-logo { background: var(--brand); color: var(--brand-ink); border-radius: 13px; width: 42px; height: 42px; padding: 0; }
+.bar-title { font-size: 17px; font-weight: 800; letter-spacing: -.01em; color: var(--ink); }
+.bar-selectbtn { background: #f3f1ec; border-radius: 13px; font-weight: 600; color: var(--ink); }
+.bar-selectbtn:hover { background: #ebe8e0; }
+.bar-btn.bar-add { background: var(--ink); color: #fff; border-radius: 13px; font-weight: 700; padding: 8px 16px; }
+.bar-btn.bar-add:hover { background: #3a342b; }
+
+/* Nut chinh */
+.bigadd { background: linear-gradient(180deg, #ffc929, var(--brand)); color: var(--brand-ink); border-radius: 18px; font-size: 16px; letter-spacing: .02em; box-shadow: 0 8px 20px -8px rgba(255,184,0,.7), inset 0 1px 0 rgba(255,255,255,.5); }
+.bigadd:hover:not(:disabled) { filter: brightness(1.04); }
+.bigadd:disabled { background: #ebe7dc; color: #a39c8c; box-shadow: none; opacity: 1; }
+.redbtn, .sheet-cta { background: var(--brand); color: var(--brand-ink); border-radius: 14px; font-weight: 800; box-shadow: 0 6px 16px -8px rgba(255,184,0,.8); }
+.redbtn:hover:not(:disabled), .sheet-cta:hover:not(:disabled) { filter: brightness(1.05); }
+.sheet-cta:disabled, .redbtn:disabled { background: #ebe7dc; color: #a39c8c; box-shadow: none; opacity: 1; }
+.ghostbtn { background: #f3f1ec; color: var(--ink); border-radius: 14px; }
+.ghostbtn:hover { background: #ebe8e0; }
+.ctx button.cta { background: var(--ink); color: #fff; border-radius: 12px; }
+.ctx button.cta:hover { background: #3a342b; }
+
+/* Card */
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 18px; }
+.panel h3 { font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; letter-spacing: -.005em; }
+.panel h3 .ico, .totbox h4 .ico { color: var(--ink-2); }
+.chev { color: var(--ink-2); }
+.count { background: #f3f1ec; color: var(--ink-2); font-weight: 600; }
+.totbox { background: #fffaf0; border: 1px solid #f6ead0; border-radius: 16px; }
+.totbox h4 { color: #8a6500; display: flex; align-items: center; gap: 8px; }
+.totcell { border-left-color: #f1e5c6; }
+.pill { background: #f3f1ec; color: var(--ink-2); font-weight: 600; }
+.pill.on { background: #e3f6ec; color: var(--ok); }
+.hm-plus { width: 56px; height: 56px; border-color: #d9d3c4; background: #fff; }
+
+/* The van */
+.bcard { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: none; padding: 14px; }
+.hm-tag { background: var(--ink); color: #fff; font-weight: 700; }
+.done { background: #e3f6ec; color: var(--ok); font-weight: 600; }
+.bcell { border-left-color: var(--line); }
+.bcell b { font-size: 17px; font-weight: 800; letter-spacing: -.01em; }
+.rb.nhat { background: #fff1c2; color: #8a6500; }
+.rb.nhi { background: #e8e6df; color: #5b564c; }
+.rb.other { background: #f3f1ec; color: var(--ink-2); }
+
+/* Input */
+input, select { background: #faf9f6; border: 1px solid var(--line); border-radius: 14px; color: var(--ink); }
+input:focus, select:focus { outline: none; border-color: var(--brand); box-shadow: var(--ring); background: #fff; }
+input::placeholder { color: #b3ad9f; }
+.score-input { font-weight: 700; }
+
+/* Popup */
+.overlay { background: rgba(24,20,14,.5); backdrop-filter: blur(3px); animation: fade .18s ease; }
+.popup { border-radius: 24px; padding: 22px; box-shadow: 0 24px 60px -12px rgba(0,0,0,.35); animation: pop .22s cubic-bezier(.2,.8,.2,1); }
+.popup h3 { font-size: 18px; font-weight: 800; letter-spacing: -.01em; margin: 0; }
+@keyframes fade { from { opacity: 0; } }
+@keyframes pop { from { opacity: 0; transform: translateY(10px) scale(.97); } }
+.iconbtn { border-radius: 50%; min-width: 36px; min-height: 36px; background: #f3f1ec; }
+.iconbtn:hover { background: #ebe8e0; }
+
+/* Dong nhap diem: cot co dinh, khong nhay khi go */
+.mrank { gap: 12px; padding: 12px 0; }
+.mrank .score-input { flex: 0 0 120px; width: 120px; max-width: none; font-size: 17px; text-align: right; padding: 10px 14px; }
+.mrank-name { font-weight: 600; }
+.round-total { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding: 12px 14px; background: #f7f5f0; border-radius: 14px; font-weight: 600; color: var(--ink-2); }
+.round-total b { font-size: 16px; font-variant-numeric: tabular-nums; color: var(--ink); }
+.round-total b.pos { color: var(--ok); } .round-total b.neg { color: var(--danger); }
+
+/* Menu + dialog phu */
+.ctx { border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 16px 40px -12px rgba(0,0,0,.25); animation: pop .16s ease; }
+.ctx button { border-radius: 10px; font-weight: 500; }
+.ctx.big { padding: 8px; }
+.gitem.on, .ctx button.on { background: #fff6dc; }
+.pchip .pick.on { border-color: var(--brand); background: #fff8e3; }
+.pchip .tick { color: #8a6500; }
+.dashadd { border-color: #d9d3c4; color: var(--ink); border-radius: 14px; }
+.dashadd:hover { background: #faf8f3; border-color: var(--brand); }
+.mchip, .pchip .pick { border-radius: 14px; border-color: var(--line); }
+.field > label { color: var(--ink-2); font-size: 13px; font-weight: 600; }
+.error { color: var(--danger); }
+
+@media (max-width: 767px) {
+  .desk { padding: 10px; gap: 12px; }
+  .bar { top: 8px; }
+  .bigadd { top: 72px; }
+  .panel { padding: 14px; border-radius: 20px; }
+  .popup { padding: 18px; }
+}
+
+/* The van gon: tieu de 1 hang, o diem thap */
+.bcard { padding: 10px 12px; }
+.bcard-head { flex-wrap: nowrap; margin-bottom: 6px; gap: 8px; }
+.bcard-head .hm-time { flex: 1; min-width: 0; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bcard-acts .hm-icobtn { min-width: 32px; min-height: 32px; padding: 0; }
+.bcell { gap: 2px; padding: 0 6px; }
+.bcell-name { font-size: 12px; }
+.bcell b { font-size: 16px; }

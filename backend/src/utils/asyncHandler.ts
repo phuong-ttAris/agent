@@ -6,7 +6,7 @@ export function ah(fn: (req: Request, res: Response) => Promise<unknown>) {
     fn(req, res).catch((e: unknown) => {
       console.error('[api] handler error:', e);
       if (res.headersSent) return next(e);
-      res.status(500).json({ message: e instanceof Error ? e.message : 'Loi server' });
+      res.status(500).json({ message: e instanceof Error ? e.message : 'Lỗi máy chủ' });
     });
   };
 }

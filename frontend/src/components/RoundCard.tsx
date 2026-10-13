@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Modal from './Modal.js';
 import Avatar from './Avatar.js';
+import Icon from './Icon.js';
 import { fmtFull, fmtNum, fmtSigned } from '../utils/format.js';
 import type { Player, Round } from '../types/index.js';
 
@@ -68,16 +69,15 @@ export default function RoundCard(props: Props) {
       <div className="bcard-head">
         <span className="hm-tag">#{round.vanSo}</span>
         <span className="hm-time">{label}</span>
-        <span className="done">✔ Đã hoàn thành</span>
         <span className="bcard-acts">
-        <button className="hm-icobtn" title="Đọc điểm ván này" onClick={() => props.onSpeak(round.id)}>🔊</button>
+        <button className="hm-icobtn" title="Đọc điểm ván này" onClick={() => props.onSpeak(round.id)}><Icon name="megaphone" /></button>
         <span className="menuwrap">
-          <button className="hm-icobtn" title="Tùy chọn" onClick={() => setMenu(!menu)}>⋮</button>
+          <button className="hm-icobtn" title="Tùy chọn" onClick={() => setMenu(!menu)}><Icon name="more" /></button>
           {menu && (
             <div className="ctx">
-              <button onClick={() => { setMenu(false); setInfo(true); }}>👁 Xem chi tiết</button>
-              <button onClick={startEdit}>✎ Chỉnh sửa</button>
-              <button className="danger" onClick={() => { setMenu(false); props.onDelete(round.id, label); }}>🗑 Xóa ván</button>
+              <button onClick={() => { setMenu(false); setInfo(true); }}><Icon name="eye" size={16} /> Xem chi tiết</button>
+              <button onClick={startEdit}><Icon name="edit" size={16} /> Chỉnh sửa</button>
+              <button className="danger" onClick={() => { setMenu(false); props.onDelete(round.id, label); }}><Icon name="trash" size={16} /> Xóa ván</button>
             </div>
           )}
         </span>

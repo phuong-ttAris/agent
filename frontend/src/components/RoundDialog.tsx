@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Avatar from './Avatar.js';
+import Icon from './Icon.js';
 import { fmtSigned } from '../utils/format.js';
 import type { Player } from '../types/index.js';
 
@@ -26,7 +27,7 @@ export default function RoundDialog({ members, onClose, onSave }: Props) {
     try {
       await onSave(members.map((p) => ({ playerId: p.id, amount: Number(scores[p.id]) || 0 })));
     } catch (e) {
-      setErr(e instanceof Error ? e.message : 'Luu that bai');
+      setErr(e instanceof Error ? e.message : 'Lưu thất bại');
       setSaving(false);
     }
   }
@@ -35,11 +36,11 @@ export default function RoundDialog({ members, onClose, onSave }: Props) {
     <div className="overlay" onClick={onClose}>
       <div className="popup" onClick={(e) => e.stopPropagation()}>
         <div className="row between">
-          <h3>＋ Thêm ván mới ({members.length} người)</h3>
-          <button className="iconbtn" onClick={onClose} aria-label="Dong">✕</button>
+          <h3>Thêm ván mới ({members.length} người)</h3>
+          <button className="iconbtn" onClick={onClose} aria-label="Đóng"><Icon name="x" /></button>
         </div>
         {err && <p className="error">{err}</p>}
-        {members.length === 0 && <p className="error">Ban chua co ai dang choi.</p>}
+        {members.length === 0 && <p className="error">Bàn chưa có ai đang chơi.</p>}
         {members.map((p) => {
           const raw = scores[p.id] ?? '';
           const v = Number(raw);
@@ -55,16 +56,16 @@ export default function RoundDialog({ members, onClose, onSave }: Props) {
                 value={raw}
                 onChange={(e) => setScores({ ...scores, [p.id]: e.target.value })}
               />
-              {typed && <b className={v < 0 ? 'neg' : 'pos'}>{fmtSigned(v || 0)}</b>}
             </div>
           );
         })}
-        <div className="row between">
-          <span className="muted">Tổng ván: {fmtSigned(total)} (ô trống = 0)</span>
+        <div className="round-total">
+          <span>Tổng ván</span>
+          <b className={total < 0 ? 'neg' : total > 0 ? 'pos' : ''}>{fmtSigned(total)}</b>
         </div>
-        {!hasAny && <p className="muted">Nhập điểm cho ít nhất 1 người: + là cộng, - là trừ vào total.</p>}
+        <p className="muted hint">Nhập số dương nếu thắng, số âm nếu thua. Ô trống tính là 0.</p>
         <button className="sheet-cta" disabled={!canSave} onClick={save}>
-          {saving ? 'Dang luu...' : 'Lưu ván'}
+          {saving ? 'Đang lưu…' : 'Lưu ván'}
         </button>
       </div>
     </div>

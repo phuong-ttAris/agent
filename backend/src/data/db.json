@@ -98,6 +98,312 @@
               "chiTiet": "+11"
             }
           ]
+        },
+        {
+          "scores": [
+            {
+              "playerId": "b02fd0c9-48e5-44a8-aab6-dcc8f7194af4",
+              "amount": 10
+            },
+            {
+              "playerId": "39713e6a-ee0d-4402-abc1-899cb2d189f7",
+              "amount": 20
+            },
+            {
+              "playerId": "7afa4c83-b0ed-4b60-b4c7-eecebd64dc47",
+              "amount": 10
+            },
+            {
+              "playerId": "0dcc8398-0e14-4868-8a27-9dac3799629a",
+              "amount": 10
+            }
+          ],
+          "ghiChu": "",
+          "id": "1d886bf1-c230-49cc-8d2c-9584360b0abd",
+          "gameId": "774c94e7-feee-4abc-a25a-e85124bda4cb",
+          "vanSo": 2,
+          "createdAt": "2026-10-09T08:20:53.564Z",
+          "ketQua": [
+            {
+              "playerId": "b02fd0c9-48e5-44a8-aab6-dcc8f7194af4",
+              "amount": 10,
+              "tong": 10,
+              "chiTiet": "+10"
+            },
+            {
+              "playerId": "39713e6a-ee0d-4402-abc1-899cb2d189f7",
+              "amount": 20,
+              "tong": 20,
+              "chiTiet": "+20"
+            },
+            {
+              "playerId": "7afa4c83-b0ed-4b60-b4c7-eecebd64dc47",
+              "amount": 10,
+              "tong": 10,
+              "chiTiet": "+10"
+            },
+            {
+              "playerId": "0dcc8398-0e14-4868-8a27-9dac3799629a",
+              "amount": 10,
+              "tong": 10,
+              "chiTiet": "+10"
+            }
+          ]
+        },
+        {
+          "scores": [
+            {
+              "playerId": "b02fd0c9-48e5-44a8-aab6-dcc8f7194af4",
+              "amount": 10
+            },
+            {
+              "playerId": "39713e6a-ee0d-4402-abc1-899cb2d189f7",
+              "amount": -20
+            },
+            {
+              "playerId": "7afa4c83-b0ed-4b60-b4c7-eecebd64dc47",
+              "amount": 10
+            },
+            {
+              "playerId": "0dcc8398-0e14-4868-8a27-9dac3799629a",
+              "amount": 30
+            }
+          ],
+          "ghiChu": "",
+          "id": "2c345ef0-9aaa-4148-a572-960157b32325",
+          "gameId": "774c94e7-feee-4abc-a25a-e85124bda4cb",
+          "vanSo": 3,
+          "createdAt": "2026-10-13T03:32:41.346Z",
+          "ketQua": [
+            {
+              "playerId": "b02fd0c9-48e5-44a8-aab6-dcc8f7194af4",
+              "amount": 10,
+              "tong": 10,
+              "chiTiet": "+10"
+            },
+            {
+              "playerId": "39713e6a-ee0d-4402-abc1-899cb2d189f7",
+              "amount": -20,
+              "tong": -20,
+              "chiTiet": "-20"
+            },
+            {
+              "playerId": "7afa4c83-b0ed-4b60-b4c7-eecebd64dc47",
+              "amount": 10,
+              "tong": 10,
+              "chiTiet": "+10"
+            },
+            {
+              "playerId": "0dcc8398-0e14-4868-8a27-9dac3799629a",
+              "amount": 30,
+              "tong": 30,
+              "chiTiet": "+30"
+            }
+          ]
+        },
+        {
+          "scores": [
+            {
+              "playerId": "b02fd0c9-48e5-44a8-aab6-dcc8f7194af4",
+              "amount": 200
+            },
+            {
+              "playerId": "39713e6a-ee0d-4402-abc1-899cb2d189f7",
+              "amount": 10
+            },
+            {
+              "playerId": "7afa4c83-b0ed-4b60-b4c7-eecebd64dc47",
+              "amount": 15
+            },
+            {
+              "playerId": "0dcc8398-0e14-4868-8a27-9dac3799629a",
+              "amount": 26
+            }
+          ],
+          "ghiChu": "",
+          "id": "40f30f4f-7b8a-4d1a-b94a-1b6a72a6115b",
+          "gameId": "774c94e7-feee-4abc-a25a-e85124bda4cb",
+          "vanSo": 4,
+          "createdAt": "2026-10-13T03:44:38.915Z",
+          "ketQua": [
+            {
+              "playerId": "b02fd0c9-48e5-44a8-aab6-dcc8f7194af4",
+              "amount": 200,
+              "tong": 200,
+              "chiTiet": "+200"
+            },
+            {
+              "playerId": "39713e6a-ee0d-4402-abc1-899cb2d189f7",
+              "amount": 10,
+              "tong": 10,
+              "chiTiet": "+10"
+            },
+            {
+              "playerId": "7afa4c83-b0ed-4b60-b4c7-eecebd64dc47",
+              "amount": 15,
+              "tong": 15,
+              "chiTiet": "+15"
+            },
+            {
+              "playerId": "0dcc8398-0e14-4868-8a27-9dac3799629a",
+              "amount": 26,
+              "tong": 26,
+              "chiTiet": "+26"
+            }
+          ]
+        },
+        {
+          "scores": [
+            {
+              "playerId": "b02fd0c9-48e5-44a8-aab6-dcc8f7194af4",
+              "amount": 2000
+            },
+            {
+              "playerId": "39713e6a-ee0d-4402-abc1-899cb2d189f7",
+              "amount": 15
+            },
+            {
+              "playerId": "7afa4c83-b0ed-4b60-b4c7-eecebd64dc47",
+              "amount": 10
+            },
+            {
+              "playerId": "0dcc8398-0e14-4868-8a27-9dac3799629a",
+              "amount": 0
+            }
+          ],
+          "ghiChu": "",
+          "id": "832cb38f-eeb0-4eaa-a0b3-d2d038111998",
+          "gameId": "774c94e7-feee-4abc-a25a-e85124bda4cb",
+          "vanSo": 5,
+          "createdAt": "2026-10-13T03:44:59.412Z",
+          "ketQua": [
+            {
+              "playerId": "b02fd0c9-48e5-44a8-aab6-dcc8f7194af4",
+              "amount": 2000,
+              "tong": 2000,
+              "chiTiet": "+2000"
+            },
+            {
+              "playerId": "39713e6a-ee0d-4402-abc1-899cb2d189f7",
+              "amount": 15,
+              "tong": 15,
+              "chiTiet": "+15"
+            },
+            {
+              "playerId": "7afa4c83-b0ed-4b60-b4c7-eecebd64dc47",
+              "amount": 10,
+              "tong": 10,
+              "chiTiet": "+10"
+            },
+            {
+              "playerId": "0dcc8398-0e14-4868-8a27-9dac3799629a",
+              "amount": 0,
+              "tong": 0,
+              "chiTiet": "+0"
+            }
+          ]
+        },
+        {
+          "scores": [
+            {
+              "playerId": "b02fd0c9-48e5-44a8-aab6-dcc8f7194af4",
+              "amount": 23
+            },
+            {
+              "playerId": "39713e6a-ee0d-4402-abc1-899cb2d189f7",
+              "amount": 12
+            },
+            {
+              "playerId": "7afa4c83-b0ed-4b60-b4c7-eecebd64dc47",
+              "amount": 200000
+            },
+            {
+              "playerId": "0dcc8398-0e14-4868-8a27-9dac3799629a",
+              "amount": 15
+            }
+          ],
+          "ghiChu": "",
+          "id": "88711e92-b4e6-4510-8af8-6df6b496328c",
+          "gameId": "774c94e7-feee-4abc-a25a-e85124bda4cb",
+          "vanSo": 6,
+          "createdAt": "2026-10-13T04:04:50.682Z",
+          "ketQua": [
+            {
+              "playerId": "b02fd0c9-48e5-44a8-aab6-dcc8f7194af4",
+              "amount": 23,
+              "tong": 23,
+              "chiTiet": "+23"
+            },
+            {
+              "playerId": "39713e6a-ee0d-4402-abc1-899cb2d189f7",
+              "amount": 12,
+              "tong": 12,
+              "chiTiet": "+12"
+            },
+            {
+              "playerId": "7afa4c83-b0ed-4b60-b4c7-eecebd64dc47",
+              "amount": 200000,
+              "tong": 200000,
+              "chiTiet": "+200000"
+            },
+            {
+              "playerId": "0dcc8398-0e14-4868-8a27-9dac3799629a",
+              "amount": 15,
+              "tong": 15,
+              "chiTiet": "+15"
+            }
+          ]
+        },
+        {
+          "scores": [
+            {
+              "playerId": "b02fd0c9-48e5-44a8-aab6-dcc8f7194af4",
+              "amount": 600
+            },
+            {
+              "playerId": "39713e6a-ee0d-4402-abc1-899cb2d189f7",
+              "amount": 3
+            },
+            {
+              "playerId": "7afa4c83-b0ed-4b60-b4c7-eecebd64dc47",
+              "amount": 3
+            },
+            {
+              "playerId": "0dcc8398-0e14-4868-8a27-9dac3799629a",
+              "amount": 3
+            }
+          ],
+          "ghiChu": "",
+          "id": "c5f71d2c-b65f-4185-b87d-ced5b8e43477",
+          "gameId": "774c94e7-feee-4abc-a25a-e85124bda4cb",
+          "vanSo": 7,
+          "createdAt": "2026-10-13T04:06:49.664Z",
+          "ketQua": [
+            {
+              "playerId": "b02fd0c9-48e5-44a8-aab6-dcc8f7194af4",
+              "amount": 600,
+              "tong": 600,
+              "chiTiet": "+600"
+            },
+            {
+              "playerId": "39713e6a-ee0d-4402-abc1-899cb2d189f7",
+              "amount": 3,
+              "tong": 3,
+              "chiTiet": "+3"
+            },
+            {
+              "playerId": "7afa4c83-b0ed-4b60-b4c7-eecebd64dc47",
+              "amount": 3,
+              "tong": 3,
+              "chiTiet": "+3"
+            },
+            {
+              "playerId": "0dcc8398-0e14-4868-8a27-9dac3799629a",
+              "amount": 3,
+              "tong": 3,
+              "chiTiet": "+3"
+            }
+          ]
         }
       ]
     }
