@@ -50,7 +50,7 @@ export default function RoundCard(props: Props) {
       );
       setEditing(false);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : 'Luu that bai');
+      setErr(e instanceof Error ? e.message : 'Lưu thất bại');
     }
   }
 
@@ -69,10 +69,10 @@ export default function RoundCard(props: Props) {
         <span className="hm-tag">#{round.vanSo}</span>
         <span className="hm-time">{label}</span>
         <span className="done">✔ Đã hoàn thành</span>
-        <span style={{ flex: 1 }} />
-        <button className="hm-icobtn" title="Doc diem van nay" onClick={() => props.onSpeak(round.id)}>🔊</button>
+        <span className="bcard-acts">
+        <button className="hm-icobtn" title="Đọc điểm ván này" onClick={() => props.onSpeak(round.id)}>🔊</button>
         <span className="menuwrap">
-          <button className="hm-icobtn" title="Tuy chon" onClick={() => setMenu(!menu)}>⋮</button>
+          <button className="hm-icobtn" title="Tùy chọn" onClick={() => setMenu(!menu)}>⋮</button>
           {menu && (
             <div className="ctx">
               <button onClick={() => { setMenu(false); setInfo(true); }}>👁 Xem chi tiết</button>
@@ -80,6 +80,7 @@ export default function RoundCard(props: Props) {
               <button className="danger" onClick={() => { setMenu(false); props.onDelete(round.id, label); }}>🗑 Xóa ván</button>
             </div>
           )}
+        </span>
         </span>
       </div>
       {err && <p className="error">{err}</p>}
@@ -89,6 +90,7 @@ export default function RoundCard(props: Props) {
           return (
             <div className="bcell" key={p.id} title={p.name}>
               <Avatar id={p.id} name={p.name} size={32} src={p.avatar} />
+              <span className="bcell-name">{p.name}</span>
               {badge(p.id)}
               {editing ? (
                 <input
@@ -106,15 +108,15 @@ export default function RoundCard(props: Props) {
       </div>
       {editing && (
         <div className="row between">
-          <span className="muted">Tong: {draftSum}</span>
+          <span className="muted">Tổng: {draftSum}</span>
           <span className="row">
-            <button onClick={() => setEditing(false)}>Huy</button>
-            <button className="primary" onClick={saveDraft}>Luu</button>
+            <button onClick={() => setEditing(false)}>Hủy</button>
+            <button className="primary" onClick={saveDraft}>Lưu</button>
           </span>
         </div>
       )}
       {info && (
-        <Modal title={`Chi tiet van luc ${label}`} onClose={() => setInfo(false)}>
+        <Modal title={`Chi tiết ván lúc ${label}`} onClose={() => setInfo(false)}>
           <table>
             <tbody>
               {members.map((p) => (
@@ -123,7 +125,7 @@ export default function RoundCard(props: Props) {
                   <td><b>{fmtNum(valOf(p.id))}</b></td>
                 </tr>
               ))}
-              <tr><td><b>Tong van</b></td><td><b>{fmtNum(total)}</b></td></tr>
+              <tr><td><b>Tổng ván</b></td><td><b>{fmtNum(total)}</b></td></tr>
             </tbody>
           </table>
         </Modal>

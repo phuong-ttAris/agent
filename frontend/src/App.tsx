@@ -334,7 +334,7 @@ export default function App() {
         <main className="center">
           <button className="bigadd" disabled={!detail} onClick={tryOpenRound}>＋&nbsp;&nbsp;THÊM VÁN MỚI</button>
 
-          {!detail && <div className="panel"><p className="muted">Chon mot ban de xem chi tiet.</p></div>}
+          {!detail && <div className="panel"><p className="muted">Chọn một bàn để xem chi tiết.</p></div>}
 
           {detail && (
             <div className="panel">
