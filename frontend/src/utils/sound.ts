@@ -84,13 +84,36 @@ async function fetchZalo(text: string): Promise<Blob | null> {
 }
 
 /**
+ * Dien thoai (iOS Safari, Chrome Android) chi cho mo AudioContext ngay trong luc cham.
+ * Mo khoa o lan cham dau tien tren trang (phat 1 buffer im lang) de sau do phat duoc o bat ky luc nao.
+ */
+function unlockAudio(): void {
+  try {
+    const ctx = (audioCtx ??= new AudioContext());
+    void ctx.resume();
+    const s = ctx.createBufferSource();
+    s.buffer = ctx.createBuffer(1, 1, 22050);
+    s.connect(ctx.destination);
+    s.start(0);
+    if (ctx.state === 'running') ['pointerdown', 'touchend', 'click'].forEach((e) => document.removeEventListener(e, unlockAudio));
+  } catch {
+    /* khong ho tro Web Audio -> se dung giong trinh duyet */
+  }
+}
+if (typeof document !== 'undefined') {
+  ['pointerdown', 'touchend', 'click'].forEach((e) => document.addEventListener(e, unlockAudio));
+}
+
+/**
  * Phat bang Web Audio: thiet bi/trinh duyet can ~vai tram ms de "danh thuc" nen doan dau hay bi cat.
  * Cho resume() xong roi bat dau phat lui `lead` giay de khong mat chu dau.
  */
 async function playBlob(blob: Blob, lead: number): Promise<boolean> {
   try {
     const ctx = (audioCtx ??= new AudioContext());
-    if (ctx.state !== 'running') await ctx.resume();
+    // resume() co the treo mai neu chua duoc mo khoa -> toi da 500ms roi bo (se doc bang giong trinh duyet).
+    if (ctx.state !== 'running') await Promise.race([ctx.resume(), new Promise((r) => setTimeout(r, 500))]);
+    if (ctx.state !== 'running') return false;
     const buf = await ctx.decodeAudioData(await blob.arrayBuffer());
     return await new Promise<boolean>((resolve) => {
       const src = ctx.createBufferSource();
