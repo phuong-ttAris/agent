@@ -511,3 +511,21 @@ input::placeholder { color: #b3ad9f; }
 
 /* Logo header la icon SVG day du (da co nen vang) */
 img.bar-logo { background: none; padding: 0; border-radius: 12px; width: 42px; height: 42px; display: block; flex: none; }
+
+/* Chuc mung nguoi ve nhat: tung hoa quanh avatar */
+.confetti { position: absolute; left: 50%; top: 50%; width: 0; height: 0; pointer-events: none; }
+.popup.winner { max-width: 320px; text-align: center; overflow: visible; }
+.winner-av { position: relative; display: inline-block; margin: 8px 0 12px; }
+.winner h3 { margin: 0 0 2px; }
+.winner-amt { display: block; font-size: 28px; margin-top: 6px; }
+.cf { position: absolute; left: -4px; top: -4px; width: 8px; height: 12px; border-radius: 2px; opacity: 0; animation: cf-burst 1.8s ease-out forwards; }
+.cf.flower { width: auto; height: auto; font-size: 18px; line-height: 1; left: -9px; top: -9px; }
+@keyframes cf-burst {
+  0% { opacity: 1; transform: translate(0, 0) rotate(0) scale(.4); }
+  60% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), calc(var(--dy) + 30px)) rotate(var(--rot)) scale(1); }
+}
+.sad-badge { position: absolute; right: -8px; bottom: -6px; font-size: 36px; line-height: 1; animation: sad-in .5s cubic-bezier(.2,.8,.2,1); }
+.winner.lose .avatar { filter: grayscale(.6); }
+@keyframes sad-in { from { opacity: 0; transform: translateY(-12px) scale(.5); } }
+@media (prefers-reduced-motion: reduce) { .confetti { display: none; } .sad-badge { animation: none; } }

@@ -143,6 +143,46 @@ export function speakScores(items: { name: string; amount: number }[]): void {
   void run(items);
 }
 
+/**
+ * Tieng ken buon "wah wah wah waaah" tong hop thanh WAV 16-bit mono (~1.8s),
+ * phat qua the <audio> dung chung nen khong can file am thanh, khong bi cong tac im lang chan nhu Web Audio.
+ */
+function sadTromboneWav(): Blob {
+  const rate = 22050;
+  const notes: [number, number][] = [[392, 0.3], [370, 0.3], [349, 0.3], [330, 0.9]]; // G4 F#4 F4 E4 (Hz, giay)
+  const n = Math.floor(notes.reduce((a, [, d]) => a + d, 0) * rate);
+  const v = new DataView(new ArrayBuffer(44 + n * 2));
+  const str = (o: number, s: string) => [...s].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+  str(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); str(8, 'WAVE');
+  str(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, rate, true); v.setUint32(28, rate * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true);
+  str(36, 'data'); v.setUint32(40, n * 2, true);
+  let i = 0;
+  let phase = 0;
+  for (const [f, d] of notes) {
+    const len = Math.floor(d * rate);
+    const last = d > 0.5;
+    for (let k = 0; k < len && i < n; k++, i++) {
+      const t = k / rate;
+      // not cuoi rung (vibrato 6Hz) va tut dan xuong
+      const freq = last ? f * (1 + 0.03 * Math.sin(2 * Math.PI * 6 * t)) - 25 * t : f;
+      phase += (2 * Math.PI * freq) / rate;
+      const env = Math.min(1, k / (0.02 * rate), (len - k) / (0.06 * rate)); // vao/ra mem, khong bi tieng lup
+      const s = Math.sin(phase) + 0.5 * Math.sin(2 * phase) + 0.25 * Math.sin(3 * phase); // vai hoa am cho giong ken dong
+      v.setInt16(44 + i * 2, Math.round(s * 0.35 * env * 32767), true);
+    }
+  }
+  return new Blob([v.buffer], { type: 'audio/wav' });
+}
+
+/** Phat tieng ken buon; cat lan doc diem dang chay (giong run()). */
+export function playSad(): void {
+  token++;
+  stopCurrent?.();
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  void playBlob(sadTromboneWav(), 0.15);
+}
+
 async function run(items: { name: string; amount: number }[]): Promise<void> {
   const my = ++token;
   stopCurrent?.(); // lan doc truoc dang phat thi dung lai
@@ -169,6 +209,7 @@ async function run(items: { name: string; amount: number }[]): Promise<void> {
     if (blob && (await playBlob(blob, i === 0 ? 0.25 : 0.05))) continue;
     if (my !== token || !('speechSynthesis' in window)) return;
     await new Promise((r) => setTimeout(r, 80)); // speak() ngay sau cancel() bi Chrome bo qua
+    if (my !== token) return; // co lan doc moi trong luc cho
     await speakWeb(segs[i].text, segs[i].lang);
   }
 }

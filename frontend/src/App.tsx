@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Modal from './components/Modal.js';
 import MemberPicker from './components/MemberPicker.js';
 import RoundDialog from './components/RoundDialog.js';
+import ResultPopup from './components/ResultPopup.js';
 import RoundCard from './components/RoundCard.js';
 import Avatar from './components/Avatar.js';
 import Icon from './components/Icon.js';
 import { api } from './services/api.js';
-import { speakScores } from './utils/sound.js';
+import { playSad, speakScores } from './utils/sound.js';
 import { compressImage } from './utils/image.js';
 import { fmtDay, fmtSigned } from './utils/format.js';
 import type { Game, Player } from './types/index.js';
@@ -34,6 +35,8 @@ export default function App() {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [gameMenu, setGameMenu] = useState(false);
   const [membersOpen, setMembersOpen] = useState(true);
+  const [celebrate, setCelebrate] = useState<{ player: Player; amount: number; lose?: boolean } | null>(null);
+  const afterCelebrate = useRef<(() => void) | null>(null); // doc diem van vua luu, cho tat popup chuc mung
   const [roundsOpen, setRoundsOpen] = useState(true);
   const [popup, setPopup] = useState<null | 'game'>(null);
   const [newGameDate, setNewGameDate] = useState(todayStr());
@@ -79,6 +82,15 @@ export default function App() {
       try { localStorage.setItem('hideTotals', v ? '0' : '1'); } catch { /* ignore */ }
       return !v;
     });
+    // mo mat xem tong tien -> popup chia buon nguoi ve bet (tong thap nhat); moi nguoi bang nhau (vd chua ai co diem) thi bo qua
+    if (!hideTotals) return;
+    const rows = inGame.map((p) => ({ player: p, amount: totalsOf(p.id) }));
+    if (rows.length < 2) return;
+    const worst = rows.reduce((a, b) => (b.amount < a.amount ? b : a));
+    if (rows.some((r) => r.amount !== worst.amount)) {
+      setCelebrate({ ...worst, lose: true });
+      playSad();
+    }
   }
 
   function openGame(id: string) {
@@ -128,9 +140,24 @@ export default function App() {
   async function saveRound(scores: { playerId: string; amount: number }[]) {
     if (!detail) return;
     await api.addRound(detail.id, { scores });
-    speakScores(scores.map((s) => ({ name: nameOf(s.playerId), amount: s.amount })));
+    const read = () => speakScores(scores.map((s) => ({ name: nameOf(s.playerId), amount: s.amount })));
     setRoundOpen(false);
+    // nguoi ve nhat = diem cao nhat (>0): popup chuc mung giua man hinh; tat popup roi moi doc diem (closeCelebrate)
+    const top = scores.reduce((a, b) => (b.amount > a.amount ? b : a));
+    const winner = players.find((p) => p.id === top.playerId);
+    if (winner && top.amount > 0) {
+      afterCelebrate.current = read;
+      setCelebrate({ player: winner, amount: top.amount });
+    } else read();
     loadAll(detail.id);
+  }
+
+  /** Tat popup ket qua; neu dang cho doc diem van vua luu thi doc sau 1s */
+  function closeCelebrate() {
+    setCelebrate(null);
+    const read = afterCelebrate.current;
+    afterCelebrate.current = null; // goi 2 lan (Esc + bam cung luc) khong doc lap
+    if (read) setTimeout(read, 1000);
   }
 
   /** Sua ca hang diem 1 van (validate tong=0) */
@@ -473,6 +500,8 @@ export default function App() {
           onSave={saveRound}
         />
       )}
+
+      {celebrate && <ResultPopup {...celebrate} onDone={closeCelebrate} />}
 
       {pickerOpen && (
         <MemberPicker
