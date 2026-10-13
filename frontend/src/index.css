@@ -457,3 +457,54 @@ input::placeholder { color: #b3ad9f; }
 .bcell { gap: 2px; padding: 0 6px; }
 .bcell-name { font-size: 12px; }
 .bcell b { font-size: 16px; }
+
+/* ===== Mobile: khong vo bo cuc, khong tran chu ===== */
+.desk, .layout1, .center, .panel, .bcard, .totbox, .totgrid, .hm-avrow, .row, .row > div { min-width: 0; }
+.layout1, .center { grid-template-columns: minmax(0, 1fr); } /* cot lưới được co, khong bi chuoi dai day ra */
+.desk { grid-template-columns: minmax(0, 1fr); overflow-x: clip; }
+.panel h3, .panel h4, .popup h3 { overflow-wrap: anywhere; }
+.muted, .error { overflow-wrap: anywhere; }
+
+/* Ten thanh vien: 1 dong + dau ... thay vi day cot */
+.hm-av { width: 84px; flex: none; }
+.hm-avname, .totcell > span:first-child { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center; }
+.pill { white-space: nowrap; }
+.totgrid { overflow: hidden; }
+.totcell { min-width: 0; }
+.totcell b, .bcell b { max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+.pickname, .mrank-name, .pname { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+
+/* Popup: vua man hinh dien thoai (ke ca thanh dia chi iOS), tranh tai tho */
+.overlay { padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); }
+.popup { max-height: calc(100dvh - 24px); overscroll-behavior: contain; }
+
+@media (max-width: 480px) {
+  .desk { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); }
+  .bar { padding: 6px; gap: 6px; }
+  .bar-selectbtn { font-size: 13px; padding: 10px; }
+  .bar-btn.bar-add { padding: 8px 12px; }
+  .bigadd { font-size: 15px; padding: 14px; }
+  .panel { padding: 12px; }
+  .totcell { font-size: 12px; }
+  .totcell b, .bcell b { font-size: 13.5px; }
+  .bcard { padding: 8px; }
+  .bcell { padding: 0 3px; }
+  .bcell-name { font-size: 11.5px; }
+  .popup { padding: 16px; border-radius: 20px; }
+  .mrank .score-input { flex-basis: 104px; width: 104px; }
+  .frow2 { grid-template-columns: 1fr 1fr; }
+  .pchip { width: 100%; }
+}
+
+/* So tien khong bao gio bi cat: thu chu nho lai thay vi dau ... */
+.totcell b, .bcell b { overflow: visible; text-overflow: clip; }
+@media (max-width: 480px) {
+  .totcell b, .bcell b { font-size: 12px; letter-spacing: -.02em; }
+}
+
+/* Form: cot luoi co duoc (ten dai khong keo popup rong ra) */
+.field { grid-template-columns: minmax(0, 1fr); min-width: 0; }
+.popup { overflow-x: hidden; }
+@media (max-width: 480px) {
+  .totcell b, .bcell b { font-size: 11.5px; }
+}

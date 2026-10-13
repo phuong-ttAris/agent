@@ -38,8 +38,11 @@ function pickVoice(prefix: string, prefer: RegExp): SpeechSynthesisVoice | undef
 }
 
 let token = 0; // moi lan bam doc tang 1 -> lan doc cu tu dung
-let audioCtx: AudioContext | null = null;
-let current: AudioBufferSourceNode | null = null;
+// 1 the <audio> dung chung: iOS (Safari + Chrome iOS deu dung WebKit) chi cho phat sau khi
+// chinh the nay da duoc "mo khoa" bang cham, va the <audio> khong bi cong tac im lang chan nhu Web Audio.
+let audioEl: HTMLAudioElement | null = null;
+let stopCurrent: (() => void) | null = null;
+const SILENT_WAV = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
 const ZALO_MAX = 200; // khop gioi han cua /api/tts
 
 /** Doc bang Web Speech (giong cua trinh duyet). Resolve khi doc xong hoac loi. */
@@ -84,49 +87,56 @@ async function fetchZalo(text: string): Promise<Blob | null> {
 }
 
 /**
- * Dien thoai (iOS Safari, Chrome Android) chi cho mo AudioContext ngay trong luc cham.
- * Mo khoa o lan cham dau tien tren trang (phat 1 buffer im lang) de sau do phat duoc o bat ky luc nao.
+ * Mo khoa am thanh o lan cham dau tien (phat 1 file im lang tren chinh the <audio> dung chung).
+ * Chi dung touchend/click: iOS khong coi pointerdown/touchstart la thao tac hop le.
  */
 function unlockAudio(): void {
+  if (stopCurrent) return; // dang doc thi dung dong vao the <audio>
   try {
-    const ctx = (audioCtx ??= new AudioContext());
-    void ctx.resume();
-    const s = ctx.createBufferSource();
-    s.buffer = ctx.createBuffer(1, 1, 22050);
-    s.connect(ctx.destination);
-    s.start(0);
-    if (ctx.state === 'running') ['pointerdown', 'touchend', 'click'].forEach((e) => document.removeEventListener(e, unlockAudio));
+    const el = (audioEl ??= new Audio());
+    el.src = SILENT_WAV;
+    void el.play().then(() => ['touchend', 'click'].forEach((e) => document.removeEventListener(e, unlockAudio)), () => {});
   } catch {
-    /* khong ho tro Web Audio -> se dung giong trinh duyet */
+    /* khong ho tro -> se dung giong trinh duyet */
   }
 }
 if (typeof document !== 'undefined') {
-  ['pointerdown', 'touchend', 'click'].forEach((e) => document.addEventListener(e, unlockAudio));
+  ['touchend', 'click'].forEach((e) => document.addEventListener(e, unlockAudio));
 }
 
 /**
- * Phat bang Web Audio: thiet bi/trinh duyet can ~vai tram ms de "danh thuc" nen doan dau hay bi cat.
- * Cho resume() xong roi bat dau phat lui `lead` giay de khong mat chu dau.
+ * Phat 1 blob mp3: nap xong (canplaythrough) roi cho `lead` giay truoc khi phat,
+ * vi thiet bi can ~vai tram ms de danh thuc dau ra, neu khong se cat mat chu dau.
  */
-async function playBlob(blob: Blob, lead: number): Promise<boolean> {
-  try {
-    const ctx = (audioCtx ??= new AudioContext());
-    // resume() co the treo mai neu chua duoc mo khoa -> toi da 500ms roi bo (se doc bang giong trinh duyet).
-    if (ctx.state !== 'running') await Promise.race([ctx.resume(), new Promise((r) => setTimeout(r, 500))]);
-    if (ctx.state !== 'running') return false;
-    const buf = await ctx.decodeAudioData(await blob.arrayBuffer());
-    return await new Promise<boolean>((resolve) => {
-      const src = ctx.createBufferSource();
-      src.buffer = buf;
-      src.connect(ctx.destination);
-      src.onended = () => resolve(true);
-      current = src;
-      src.start(ctx.currentTime + lead);
-    });
-  } catch (e) {
-    console.warn('[audio] loi phat:', e);
-    return false;
-  }
+function playBlob(blob: Blob, lead: number): Promise<boolean> {
+  return new Promise((resolve) => {
+    const el = (audioEl ??= new Audio());
+    const url = URL.createObjectURL(blob);
+    let finished = false;
+    const end = (ok: boolean) => {
+      if (finished) return;
+      finished = true;
+      stopCurrent = null;
+      el.onended = el.onerror = el.oncanplaythrough = null;
+      URL.revokeObjectURL(url);
+      resolve(ok);
+    };
+    stopCurrent = () => {
+      el.pause();
+      end(true); // bi lan doc moi cat ngang: run() tu thoat nho token
+    };
+    el.onended = () => end(true);
+    el.onerror = () => end(false);
+    el.oncanplaythrough = () => {
+      el.oncanplaythrough = null;
+      setTimeout(() => {
+        if (!finished) el.play().catch(() => end(false));
+      }, lead * 1000);
+    };
+    el.src = url;
+    el.load();
+    setTimeout(() => end(false), 15000); // an toan: khong de hang doi treo
+  });
 }
 
 export function speakScores(items: { name: string; amount: number }[]): void {
@@ -135,11 +145,7 @@ export function speakScores(items: { name: string; amount: number }[]): void {
 
 async function run(items: { name: string; amount: number }[]): Promise<void> {
   const my = ++token;
-  try {
-    current?.stop(); // lan doc truoc dang phat thi dung lai (onended cua no van resolve)
-  } catch {
-    /* da dung roi */
-  }
+  stopCurrent?.(); // lan doc truoc dang phat thi dung lai
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
   // Chia thanh cac doan lien tiep cung ngon ngu: ten (vi/en) + "duoc/mat N" (vi). Khong doc "dong".
